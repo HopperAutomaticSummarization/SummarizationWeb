@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- 新 Bootstrap 核心 CSS 文件 -->
+        <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+        <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+        <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <title>自动摘要</title>
+    </head>
+    <body background="../../../static/images/back1.jpeg" style=" background-repeat:no-repeat ;
+background-size:100% 100%;
+background-attachment: fixed;">
+
+        <!--<div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                     <div class="navbar-header">
+                        <div class="navbar-brand" style="color: #1E90FF" >
+                        <span class="glyphicon glyphicon-fire"></span>&nbsp;&nbsp;Auto Summarization
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>-->
+
+        <br><br><br><br><br>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>正文</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="success" height="150px">
+                            <td ><textarea id="ch" cols=66 rows=6 style="background-color:transparent" >{{ Content }}</textarea></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div><button id="submit" onclick="submit()" class="btn btn-primary btn-lg">提交</button></div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>摘要</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="warning" height="150px">
+                            <td id="en"><textarea id="ans" cols=66 rows=6 style="background-color:transparent">{{ Summarization }}</textarea></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <br><br><br><br><br>
+        </div>
+
+        <!--<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+            <div align="center">
+                <a href="http://222.44.90.83/asiit" target="_blank">
+                    <img alt="Iotlab logo" height="40" src="../../../static/images/iotlab-logo.png" width="40">
+                航运信息技术研究所 © 2013 -2016
+                </a>
+            </div>
+        </nav>-->
+
+        <script>
+            $(document).ready(function(){
+                $("#submit").on("click",function(){
+                    s = $("#ch").val();
+                    url = "/autosummarization/submit/";
+                    $.ajax({
+                    type:"Post",
+						url:url,
+						data:{"ch_content":s,csrfmiddlewaretoken: '{{ csrf_token }}'},
+						dataType:"json",
+						success:function(result){
+                        alert(result);
+						},
+						error:function(){
+							alert("这个我也不知道啊！");
+						}
+                });
+                })
+            });
+            {#function submit(){#}
+            {#    .$ajax#}
+            {#    var content = '' + document.getElementById("ch").value;#}
+            {#    //alert(content)#}
+            {#    // 创建一个 form#}
+            {#    var tempform = document.createElement("form");#}
+            {#    tempform.id = "form1";#}
+            {#    tempform.name = "form1";#}
+            {#    // 添加到 body 中#}
+            {#    document.body.appendChild(tempform);#}
+            {#    // 创建输入#}
+            {#    var ch_content = document.createElement("input");#}
+            {##}
+            {#    // 设置相应参数#}
+            {#    ch_content.type = "text";#}
+            {#    ch_content.name = "ch_content";#}
+            {#    ch_content.value = content;#}
+            {##}
+            {#    //将该输入框插入到 form 中#}
+            {#    tempform.appendChild(ch_content);#}
+            {##}
+            {#    tempform.method = "POST";#}
+            {#    tempform.action = "/autosummarization/submit/";#}
+            {##}
+            {#    tempform.submit();#}
+            {#    document.body.removeChild(tempform);#}
+            {##}
+            {##}
+            {#}#}
+        </script>
+
+    </body>
+
+</html>
