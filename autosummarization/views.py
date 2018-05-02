@@ -1,14 +1,10 @@
-# coding:utf8
 from django.template import loader, Context
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 
-import sys
-import importlib
-importlib.reload(sys)
-#python3.6写法
 from socket import socket,AF_INET,SOCK_STREAM
 
+# Create your views here.
 
 def client(content):
     sock = socket(AF_INET, SOCK_STREAM)

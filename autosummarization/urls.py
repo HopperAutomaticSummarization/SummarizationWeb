@@ -1,7 +1,7 @@
-from django.conf.urls import url
-from autosummarization import views
+from django.urls import path
+from . import views
 
 urlpatterns = [
-    url(r'^index/$', views.index,name = 'index'),
-    url(r'^submit/$', views.submit,name = 'submit'),
+    path(r'index/', views.index, name='index'),
+    path(r'submit/', views.submit, name='submit'),
 ]
