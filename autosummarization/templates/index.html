@@ -42,7 +42,7 @@ background-attachment: fixed;">
                         </thead>
                         <tbody>
                           <tr class="success" height="150px">
-                            <td ><textarea id="ch" cols=66 rows=6 style="background-color:transparent" >{{ Content }}</textarea></td>
+                            <td ><textarea id="ch" cols=66 rows=6 style="background-color:transparent" placeholder="Content"></textarea></td>
                           </tr>
                         </tbody>
                       </table>
@@ -61,7 +61,7 @@ background-attachment: fixed;">
                         </thead>
                         <tbody>
                           <tr class="warning" height="150px">
-                            <td id="en"><textarea id="ans" cols=66 rows=6 style="background-color:transparent">{{ Summarization }}</textarea></td>
+                            <td id="en"><textarea id="ans" cols=66 rows=6 style="background-color:transparent" placeholder="Summarization"></textarea></td>
                           </tr>
                         </tbody>
                       </table>
@@ -88,48 +88,19 @@ background-attachment: fixed;">
                     s = $("#ch").val();
                     url = "/autosummarization/submit/";
                     $.ajax({
-                    type:"Post",
+                        type:"Post",
 						url:url,
 						data:{"ch_content":s,csrfmiddlewaretoken: '{{ csrf_token }}'},
 						dataType:"json",
 						success:function(result){
-                        alert(result);
+                            $("#en").text(result["summarization"]);
 						},
 						error:function(){
 							alert("这个我也不知道啊！");
 						}
+                    });
                 });
-                })
-            });
-            {#function submit(){#}
-            {#    .$ajax#}
-            {#    var content = '' + document.getElementById("ch").value;#}
-            {#    //alert(content)#}
-            {#    // 创建一个 form#}
-            {#    var tempform = document.createElement("form");#}
-            {#    tempform.id = "form1";#}
-            {#    tempform.name = "form1";#}
-            {#    // 添加到 body 中#}
-            {#    document.body.appendChild(tempform);#}
-            {#    // 创建输入#}
-            {#    var ch_content = document.createElement("input");#}
-            {##}
-            {#    // 设置相应参数#}
-            {#    ch_content.type = "text";#}
-            {#    ch_content.name = "ch_content";#}
-            {#    ch_content.value = content;#}
-            {##}
-            {#    //将该输入框插入到 form 中#}
-            {#    tempform.appendChild(ch_content);#}
-            {##}
-            {#    tempform.method = "POST";#}
-            {#    tempform.action = "/autosummarization/submit/";#}
-            {##}
-            {#    tempform.submit();#}
-            {#    document.body.removeChild(tempform);#}
-            {##}
-            {##}
-            {#}#}
+            })
         </script>
 
     </body>

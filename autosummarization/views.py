@@ -1,16 +1,17 @@
 from django.template import loader, Context
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
-
-from socket import socket,AF_INET,SOCK_STREAM
+import json
+import socket
 
 # Create your views here.
-
+host = socket.gethostbyname(socket.gethostname())
+port = 50008
 def client(content):
-    sock = socket(AF_INET, SOCK_STREAM)
-    sock.connect(('192.168.1.103',50008))
-    sock.send(content)
-    reply = sock.recv(1024)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((host,port))
+    sock.send(bytes(content,encoding='utf8'))
+    reply = (sock.recv(1024)).decode()
     sock.close()
     print('client got:[%s]' % reply)
     return reply
@@ -31,9 +32,7 @@ def submit(req):
     summarization = client(ch_content)
     summarization = summarization.replace('BEG','')
     summarization = summarization.split('END')[0]
-    print(summarization)
-    # summarization = ch_content+'123123123'
-    # c = Context({'Summarization': summarization, 'Content':ch_content})
-    c = summarization
+    response = {'summarization':summarization}
+    print(response)
     # return HttpResponse(t.render(c))
-    return HttpResponse(c, content_type = 'application/json')
+    return HttpResponse(json.dumps(response), content_type = 'application/json')
